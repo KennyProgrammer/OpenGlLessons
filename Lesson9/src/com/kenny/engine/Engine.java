@@ -44,8 +44,8 @@ public class Engine
 		
 		int [] indices = {0, 1, 2, 0, 2, 3};
 		
-		// —истый код хранение данных в одном Vertex Buffer c атрибутами без модификаций
-		// с моей стороны.
+		// Р§РёСЃС‚С‹Р№ РєРѕРґ С…СЂР°РЅРµРЅРёРµ РґР°РЅРЅС‹С… РІ РѕРґРЅРѕРј Vertex Buffer c Р°С‚СЂРёР±СѓС‚Р°РјРё Р±РµР· РјРѕРґРёС„РёРєР°С†РёР№
+		// СЃ РјРѕРµР№ СЃС‚РѕСЂРѕРЅС‹.
 		/*
 		int vertexArray = glCreateVertexArrays();
 		glBindVertexArray(vertexArray);
