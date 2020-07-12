@@ -47,30 +47,30 @@ public class Engine
 		this.engineWindow.create();
 
 		RenderEngine.init();
-		gameObjects = new ArrayList<GameObject>();
+		Engine.gameObjects = new ArrayList<GameObject>();
 		
+		this.texture = new Texture("res/textures/icon_breath.png");
 		this.shader = new Shader("/shaders/Rectangle.vert", "/shaders/Rectangle.frag");
-		this.texture = new Texture("res/textures/logo_256x256.png");
-		
 		this.shader.bind();
 		this.shader.setUnifromInt("u_TextureSampler", 0);
-		
+			
 		this.update();
 	}
 	
 	public void update() 
 	{
 		float[] vertices =
-			{
-//                  positions          colours               uv
-				0.30f,  0.5f, 0,  1.0f, 1.0f, 0.0f, 1.0f,  1.0f, 0.0f,
-			   -0.30f,  0.5f, 0,  1.0f, 0.0f, 1.0f, 1.0f,  0.0f, 0.0f,
-			   -0.30f, -0.5f, 0,  1.0f, 1.0f, 0.0f, 1.0f,  0.0f, 1.0f,
-			    0.30f, -0.5f, 0,  0.0f, 1.0f, 0.0f, 1.0f,  1.0f, 1.0f
-			};
+		{
+//                  		positions          colours               uv
+			 0.30f,  0.5f, 0,  1.0f, 1.0f, 0.0f, 1.0f,  1.0f, 0.0f,
+			-0.30f,  0.5f, 0,  1.0f, 0.0f, 1.0f, 1.0f,  0.0f, 0.0f,
+			-0.30f, -0.5f, 0,  1.0f, 1.0f, 0.0f, 1.0f,  0.0f, 1.0f,
+			 0.30f, -0.5f, 0,  0.0f, 1.0f, 0.0f, 1.0f,  1.0f, 1.0f
+		};
 		
 		int [] indices = {0, 1, 2, 0, 2, 3};
 		
+		//создание модели квадрата
 		VertexArrayObject vertexArray = new VertexArrayObject();
 		VertexBufferObject vertexBuffer = new VertexBufferObject(vertices);
 		vertexBuffer.setLayout(new BufferLayout
@@ -83,6 +83,7 @@ public class Engine
 		IndexBufferObject indexBuffer = new IndexBufferObject(indices);
 		vertexArray.putBuffer(indexBuffer);
 		
+		//создание обьектов
 		GameObject gameObject = new GameObject(new Vector3f(-1.5f,0,0), new Vector3f(0,0,0), new Vector3f(1,1,1));
 		gameObject.setModel(vertexArray);
 		gameObject.setTexture(texture);
@@ -90,7 +91,6 @@ public class Engine
 		GameObject gameObject2 = new GameObject(new Vector3f(0,0,0), new Vector3f(0,0,0), new Vector3f(0.5f,0.5f, 0.5f));
 		gameObject2.setModel(vertexArray);
 		gameObject2.setTexture(texture);
-		
 		
 		while(!this.engineWindow.isCloseRequested())
 		{
@@ -105,8 +105,10 @@ public class Engine
 			if(gameObject.getPosition().x >= 1.5f)
 				gameObject.getPosition().x = -1.5f;
 			
-			RenderEngine.begin(null, shader);
+			//рендеринг сцены.
+			RenderEngine.begin(shader);
 			{
+				//рендеринг каждого обьекта добавленного в лист gameObjects.
 				for(GameObject gm : gameObjects)
 				{
 					RenderEngine.renderGameObject(gm, shader);
@@ -126,13 +128,13 @@ public class Engine
 		return instance;
 	}
 	
-	public static void main(String[] args) 
-	{
-		new Engine().run();
-	}
-
 	public EngineWindow getEngineWindow() 
 	{
 		return this.engineWindow;
+	}
+	
+	public static void main(String[] args) 
+	{
+		new Engine().run();
 	}
 }
